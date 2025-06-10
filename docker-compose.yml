@@ -1,0 +1,28 @@
+services:
+  plex-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plex-mcp
+    ports:
+      - "${PLEX_MCP_PORT:-9150}:${PLEX_MCP_PORT:-9150}"
+    env_file:
+      - .env
+    volumes:
+      - plex-logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6974/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - plex-mcp-network
+
+volumes:
+  plex-logs:
+
+networks:
+  plex-mcp-network:
+    driver: bridge 
