@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: plex-mcp
+    labels:
+      - com.centurylinklabs.watchtower.enable=false
     ports:
       - "${PLEX_MCP_PORT:-9150}:${PLEX_MCP_PORT:-9150}"
     env_file:
