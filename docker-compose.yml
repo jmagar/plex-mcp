@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     volumes:
-      - plex-logs:/app/logs
+      - /mnt/cache/appdata/plex-mcp/logs:/app/logs
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9150/health"]
@@ -20,11 +20,8 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - plex-mcp-network
-
-volumes:
-  plex-logs:
+      - jakenet
 
 networks:
-  plex-mcp-network:
-    driver: bridge 
+  jakenet:
+    external: true 
